@@ -1,12 +1,12 @@
 package com.juaracoding.controller;
 
 import com.juaracoding.contoh.ContohDoank;
+import com.juaracoding.dto.validation.ValProductDTO;
 import com.juaracoding.model.ClassObj;
 import com.juaracoding.model.ClassResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -59,8 +59,13 @@ public class ContohRestController {
         response.setTotal(50000.0);
         return response;
     }
-    @GetMapping("/a")
-    public void callConfig(){
+
+    @PostMapping("/a")
+    public void callConfig(@Valid @RequestBody ValProductDTO valProductDTO){
+        System.out.println("ID "+valProductDTO.getId());
+        System.out.println("Nama "+valProductDTO.getNama());
+        System.out.println("Desc "+valProductDTO.getDesc());
+        
 //        System.out.println(SMTPConfig.getEmailUserName());
 //        System.out.println(SMTPConfig.getEmailPassword());
 //        System.out.println(SMTPConfig.getEmailHost());
