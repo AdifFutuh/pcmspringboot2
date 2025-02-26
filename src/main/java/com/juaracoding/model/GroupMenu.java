@@ -15,6 +15,4 @@ public class GroupMenu {
 
     @Column(name = "Deskripsi",nullable = false, length = 50,unique = true)
     private String deskripsi;
-
-    
 }

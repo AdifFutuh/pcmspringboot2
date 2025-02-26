@@ -78,7 +78,6 @@ public class ContohRestController {
             @PathVariable(value = "email") String strEmail,
             @RequestParam(value = "hl") String strHl,
             @RequestParam(value = "ved") String strVed
-
     ){
         System.out.println("Nilai ID "+longId);
         System.out.println("Nilai Nama "+strNama);
