@@ -70,4 +70,22 @@ public class ContohRestController {
 //        System.out.println(SMTPConfig.getEmailPassword());
 //        System.out.println(SMTPConfig.getEmailHost());
     }
+
+    @GetMapping("/a/{id}/{nama}/{email}")
+    public String contoh(
+            @PathVariable(value = "id") Long longId,
+            @PathVariable(value = "nama") String strNama,
+            @PathVariable(value = "email") String strEmail,
+            @RequestParam(value = "hl") String strHl,
+            @RequestParam(value = "ved") String strVed
+
+    ){
+        System.out.println("Nilai ID "+longId);
+        System.out.println("Nilai Nama "+strNama);
+        System.out.println("Nilai Email "+strEmail);
+        System.out.println("Nilai HL "+strHl);
+        System.out.println("Nilai Ved "+strVed);
+
+        return "OK";
+    }
 }

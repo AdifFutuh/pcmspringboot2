@@ -5,6 +5,8 @@ public class ContohASCII {
 
     public static void main(String[] args) {
         // hanya boleh angka dan huruf kecil serta titik
+        // oiandsoijaldkaokjsoiajeropiheorihweroihworhopwerouiwhrladnlojoijrtoy
+        // AES -> Advanced Encryption Standard
         // minimal 6 maksimal 16
 //        Scanner sc = new Scanner(System.in);
 //        String strInput = sc.nextLine();
