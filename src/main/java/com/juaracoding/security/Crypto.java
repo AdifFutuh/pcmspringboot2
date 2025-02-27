@@ -54,7 +54,8 @@ public class Crypto {
         String strToEncrypt = "sa1";//put text to encrypt in here
         System.out.println("Encryption Result : "+performEncrypt(strToEncrypt));
 
-        String strToDecrypt = "0d3f28a8cb0577e4fd42fbfdf2f72eac";//put text to decrypt in here
+//        String strToDecrypt = "0d3f28a8cb0577e4fd42fbfdf2f72eac";//put text to decrypt in here
+        String strToDecrypt = "a4bf7d61703b44d20737ee237dfa665e2b0545d0ea4504fa4cf1a2155137946b6bc0dbed57e3f4f4edf1894b1c5db397f0598fe452c5ce615409fb5de5fbb13842603964fcc0db3ebff8c7ebe9576a34e68b21549fd71a1d10328a78c69397ac";//put text to decrypt in here
         System.out.println("Decryption Result : "+performDecrypt(strToDecrypt));
     }
 }
