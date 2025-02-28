@@ -1,5 +1,6 @@
 package com.juaracoding.dto.validation;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
@@ -9,7 +10,8 @@ public class ValProductDTO {
     private Long id;
 
     @Pattern(regexp = "^[\\w\\s]{5,10}$",message = "Alfanumerik dan Spasi Min 5 Maks 10")
-    private String nama;
+//    @JsonProperty("nama-lengkap")
+    private String nama;//nama-lengkap
 
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{10,20}$",message = "Alfanumerik dan Spasi Min 10 Maks 20")
     private String desc;

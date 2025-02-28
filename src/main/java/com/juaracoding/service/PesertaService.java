@@ -26,6 +26,6 @@ public class PesertaService {
     }
 
     public List findall(String value){
-        return pesertaRepo.findByNamaContainsIgnoreCase(value);
+        return pesertaRepo.findByNamaPesertaContainsIgnoreCase(value);
     }
 }

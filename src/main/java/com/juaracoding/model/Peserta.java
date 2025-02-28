@@ -1,23 +1,25 @@
 package com.juaracoding.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "MstPeserta")
+@Table(name = "Peserta",uniqueConstraints = @UniqueConstraint(
+        columnNames = {"NamaPeserta","Alamat"},name = "unq-peserta-alamat"))
 public class Peserta {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDPeserta")
-    private Long idPeserta;
+    private Long idPeserta;//snake case -> camelCase -> PascalCase
 
-    @Column(name = "NamaPeserta", length = 40)
-    private String nama;
+    @Column(name = "NamaPeserta")
+    @JsonProperty("nama-peserta")
+    private String namaPeserta;
 
-    @Column(name = "Batch", length = 5)
+    /** adapt when migration */
+    @Column(name = "Batch", length = 5,insertable = false,columnDefinition = "comment ")
     private String batch;
 
     @Column(name = "Alamat",length = 500)
@@ -31,12 +33,12 @@ public class Peserta {
         this.idPeserta = idPeserta;
     }
 
-    public String getNama() {
-        return nama;
+    public String getNamaPeserta() {
+        return namaPeserta;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setNamaPeserta(String namaPeserta) {
+        this.namaPeserta = namaPeserta;
     }
 
     public String getBatch() {

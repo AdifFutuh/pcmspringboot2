@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface PesertaRepo extends JpaRepository<Peserta, Long> {
 
-    List<Peserta> findByNamaContainsIgnoreCase(String nama);
+    List<Peserta> findByNamaPesertaContainsIgnoreCase(String nama);
 }
