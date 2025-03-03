@@ -1,5 +1,11 @@
 package com.juaracoding.model;
 
+/**
+ *  Group Menu
+ *  Menu
+ *  Akses
+ *  User
+ */
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
