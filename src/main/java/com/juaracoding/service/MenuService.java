@@ -3,6 +3,7 @@ package com.juaracoding.service;
 import com.juaracoding.core.IReport;
 import com.juaracoding.core.IService;
 import com.juaracoding.model.Menu;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ import java.util.List;
 public class MenuService implements IService<Menu>, IReport<Menu> {
 
     @Override
-    public void insert(Menu menu) {
-        
+    public  ResponseEntity<Object> insert(Menu menu) {
+        return null;
     }
 
     @Override
@@ -34,8 +35,8 @@ public class MenuService implements IService<Menu>, IReport<Menu> {
     }
 
     @Override
-    public List<Menu> findAll() {
-        return List.of();
+    public ResponseEntity<Object> findAll() {
+        return null;
     }
 
     @Override

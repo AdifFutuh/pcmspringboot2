@@ -27,6 +27,10 @@ public class ContohASCII {
 //            System.out.println("Format Tidak Sesuai !! Minimal 6 Maksimal 16");
 //        }
 //"
-        System.out.println("\"");
+//        System.out.println("\"");
+//        System.out.println("a".equals("r"));
+//        System.out.println("г");
+//        System.out.println((int)'н');
+        System.out.println("AYAн".equals("Å"));
     }
 }

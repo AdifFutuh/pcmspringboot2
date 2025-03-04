@@ -2,6 +2,7 @@ package com.juaracoding.config;
 
 
 import com.juaracoding.security.Crypto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -26,5 +27,10 @@ public class MainConfig {
         dataSourceBuilder.password(Crypto.performDecrypt(env.getProperty("spring.datasource.password")));
         dataSourceBuilder.driverClassName(env.getProperty("spring.datasource.driver-class-name"));
         return dataSourceBuilder.build();
+    }
+    
+    @Bean
+    public ModelMapper getModelMapper() {
+        return new ModelMapper();
     }
 }
