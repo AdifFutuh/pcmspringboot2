@@ -1,8 +1,5 @@
 package com.juaracoding.dto.response;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-
 public class RespProductDTO {
 
     private String nama;

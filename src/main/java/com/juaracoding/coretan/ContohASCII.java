@@ -1,5 +1,7 @@
 package com.juaracoding.coretan;
 
+import com.juaracoding.security.Crypto;
+
 public class ContohASCII {
 
 
@@ -31,6 +33,11 @@ public class ContohASCII {
 //        System.out.println("a".equals("r"));
 //        System.out.println("г");
 //        System.out.println((int)'н');
-        System.out.println("AYAн".equals("Å"));
+//        System.out.println("AYAн".equals("Å"));
+        System.out.println(System.currentTimeMillis());
+//        1741268509590
+//        1741268546414
+        System.out.println(Crypto.performEncrypt("C1#paul123-poll.chihuy@gmail.com-081286016416#1741269659089"));
+
     }
 }

@@ -1,24 +1,26 @@
 package com.juaracoding.model;
 
+
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "MstGroupMenu")
-public class GroupMenu {
+@Table(name = "MstAkses")
+public class Akses {
+
     @Id
+    @Column(name = "IDAkses")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IDGroup")
     private Long id;
 
-    /**
-     *  *///cuma contoh gak ada maksud apa apa
-    @Column(name = "Nama",nullable = false, length = 50,unique = true)
+    @Column(name = "NamaAkses",unique = true, nullable = false,length = 20)
     private String nama;
 
-    @Column(name = "Deskripsi",nullable = false, length = 100,unique = true)
+    @Column(name = "Deskripsi",nullable = false, length = 100)
     private String deskripsi;
 
     @Column(name = "CreatedBy",nullable = false,updatable = false)
@@ -29,11 +31,18 @@ public class GroupMenu {
     private LocalDateTime createdDate;
 
     @Column(name = "ModifiedBy",insertable = false)
-    private Long modifiedBy=-1L;
+    private Long modifiedBy=1L;
 
     @Column(name = "ModifiedDate",insertable = false)
     @UpdateTimestamp
     private LocalDateTime modifiedDate;
+
+    @ManyToMany
+    @JoinTable(name = "MapAksesMenu", uniqueConstraints =@UniqueConstraint(name = "unq-akses-to-menu",columnNames = {"IDAkses","IDMenu"}),
+            joinColumns = @JoinColumn(name = "IDAkses",foreignKey = @ForeignKey(name = "fk-toAkses")),
+            inverseJoinColumns = @JoinColumn(name = "IDMenu",foreignKey = @ForeignKey(name = "fk-toMenu"))
+    )
+    private List<Menu> ltMenu;
 
     public Long getId() {
         return id;
@@ -89,5 +98,13 @@ public class GroupMenu {
 
     public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public List<Menu> getLtMenu() {
+        return ltMenu;
+    }
+
+    public void setLtMenu(List<Menu> ltMenu) {
+        this.ltMenu = ltMenu;
     }
 }

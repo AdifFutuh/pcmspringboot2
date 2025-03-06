@@ -3,64 +3,55 @@ package com.juaracoding.service;
 import com.juaracoding.core.IReport;
 import com.juaracoding.core.IService;
 import com.juaracoding.model.Menu;
+import com.juaracoding.repo.MenuRepo;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 /**
  *  Platform Code  - USM
  *  Modul Code - 01
  *  FV - FE 
  */
-public class MenuService implements IService<Menu>, IReport<Menu> {
+@Service
+@Transactional
+public class MenuService implements IService<Menu> {
+
+    @Autowired
+    private MenuRepo menuRepo;
+
 
     @Override
-    public  ResponseEntity<Object> insert(Menu menu) {
+    public ResponseEntity<Object> save(Menu menu, HttpServletRequest request) {
         return null;
     }
 
     @Override
-    public void update(Long id, Menu menu) {
-
-    }
-
-    @Override
-    public void delete(Long id) {
-
-    }
-
-    @Override
-    public Menu findBy(Long id) {
+    public ResponseEntity<Object> update(Long id, Menu menu, HttpServletRequest request) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Object> findAll() {
+    public ResponseEntity<Object> delete(Long id, HttpServletRequest request) {
         return null;
     }
 
     @Override
-    public void uploadExcel(Menu menu) {
-        
+    public ResponseEntity<Object> findAll(Pageable pageable, HttpServletRequest request) {
+        return null;
     }
 
     @Override
-    public void downloadExcel(Menu menu) {
-
+    public ResponseEntity<Object> findById(Long id, HttpServletRequest request) {
+        return null;
     }
 
     @Override
-    public void uploadImage(Menu menu) {
-
-    }
-
-    @Override
-    public void downloadImage(Menu menu) {
-
-    }
-
-    @Override
-    public void downloadPdf(Menu menu) {
-
+    public ResponseEntity<Object> findByParam(Pageable pageable, String columnName, String value, HttpServletRequest request) {
+        return null;
     }
 }

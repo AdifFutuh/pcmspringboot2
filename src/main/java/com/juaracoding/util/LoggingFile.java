@@ -19,4 +19,10 @@ public class LoggingFile {
                     append("ERROR IS ==> ").append(e.getMessage()).append(System.getProperty("line.separator")));
         }
     }
+
+    public static void print(Object obj, String strFlag) {
+        if(strFlag.equals("y")){
+            System.out.println(obj);
+        }
+    }
 }
