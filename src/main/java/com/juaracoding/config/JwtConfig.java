@@ -10,6 +10,16 @@ public class JwtConfig {
 
     private static String secretKey;
     private static Long timeExpiration;
+    private static String tokenEncryptEnable;
+
+    public static String getTokenEncryptEnable() {
+        return tokenEncryptEnable;
+    }
+
+    @Value("${token.enable.encrypt}")
+    private void setTokenEncryptEnable(String tokenEncryptEnable) {
+        this.tokenEncryptEnable = tokenEncryptEnable;
+    }
 
     public static String getSecretKey() {
         return secretKey;

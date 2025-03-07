@@ -1,17 +1,17 @@
-### INSERT GROUP MENU
-POST http://localhost:8083/group-menu
-Content-Type: application/json
-
-{
-"nama":"User Management",
-"deskripsi":"Untuk Seluruh Menu Yang Berhubungan Dengan User Management"
-}
-
-### UPDATE GROUP MENU
-PUT http://localhost:8083/group-menu/1
-Content-Type: application/json
-
-{
-  "nama":"User Management",
-  "deskripsi":"Untuk Seluruh Menu Yang Berhubungan Dengan User Management"
-}
+#### INSERT GROUP MENU
+#POST http://localhost:8083/group-menu
+#Content-Type: application/json
+#
+#{
+#"nama":"User Management",
+#"deskripsi":"Untuk Seluruh Menu Yang Berhubungan Dengan User Management"
+#}
+#
+#### UPDATE GROUP MENU
+#PUT http://localhost:8083/group-menu/1
+#Content-Type: application/json
+#
+#{
+#  "nama":"User Management",
+#  "deskripsi":"Untuk Seluruh Menu Yang Berhubungan Dengan User Management"
+#}

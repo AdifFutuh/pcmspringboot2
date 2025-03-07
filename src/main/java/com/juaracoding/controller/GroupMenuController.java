@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,6 +21,7 @@ public class GroupMenuController {
     GroupMenuService groupMenuService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('GroupMenu')")
     public ResponseEntity<Object> findAll(){
 //        return groupMenuService.findAll();
         LoggingFile.print("print"+2, OtherConfig.getEnablePrint());

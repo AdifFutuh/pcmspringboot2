@@ -56,12 +56,12 @@ public class User implements UserDetails {
     private String otp;
 
     @Column(name = "CreatedBy",updatable = false,nullable = false)
-    private String createdBy;
+    private String createdBy="1";
     @Column(name = "CreatedDate",updatable = false,nullable = false)
     private Date createdDate = new Date();
 
     @Column(name = "UpdatedBy",insertable = false)
-    private String updatedBy;
+    private String updatedBy="1";
     @Column(name = "UpdatedDate",insertable = false)
     private Date updatedDate;
 
