@@ -1,7 +1,6 @@
 package com.juaracoding.service;
 
 import com.juaracoding.config.JwtConfig;
-import com.juaracoding.config.OtherConfig;
 import com.juaracoding.dto.validation.ValLoginDTO;
 import com.juaracoding.dto.validation.ValRegisDTO;
 import com.juaracoding.dto.validation.ValVerifyOTPRegisDTO;
@@ -66,33 +65,44 @@ public class AppUserDetailService  implements UserDetailsService {
         return ResponseEntity.ok().body(m);
     }
 
+    /** Kuota 011-020 */
     public ResponseEntity<Object> regis(User user , HttpServletRequest request){
         Optional<User> optUser = userRepo.findByUsername(user.getUsername());
         Map<String,Object> m = new HashMap<>();
+        /** control flow yg ini jika user belum pernah sama sekali melakukan registrasi ,
+         *  sehingga proses nya tinggal simpan saja
+         */
+        int intOtp = random.nextInt(111111,999999);
         if(!optUser.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username / Password Salah - AUT00FV001");
+            user.setPassword(BcryptImpl.hash(user.getUsername()+user.getPassword()));
+            user.setOtp(BcryptImpl.hash(String.valueOf(intOtp)));
+            userRepo.save(user);
+            m.put("otp",intOtp);
+            m.put("email",user.getEmail());
+        }else{
+            User userNext = optUser.get();
+            if(userNext.getRegistered()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User Telah Terdaftar, Silahkan Langsung Melakukan Login !! - AUT00FV011");
+            }
+            Optional<User> optCheckEmailUser = userRepo.findByEmailAndIsRegistered(user.getEmail(),true);
+            if(optCheckEmailUser.isPresent()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Telah Digunakan - AUT00FV012");
+            }
+            Optional<User> optCheckNoHp = userRepo.findByNoHpAndIsRegistered(user.getNoHp(),true);
+            if(optCheckNoHp.isPresent()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No HP Telah Digunakan - AUT00FV013");
+            }
+            userNext.setOtp(BcryptImpl.hash(String.valueOf(intOtp)));
+            userNext.setEmail(user.getEmail());
+            userNext.setNoHp(user.getNoHp());
+            userNext.setAlamat(user.getAlamat());
+            userNext.setNama(user.getNama());
+            userNext.setTanggalLahir(user.getTanggalLahir());
+            userNext.setModifiedBy(userNext.getId());
+            userNext.setPassword(user.getUsername()+user.getPassword());
+            m.put("otp",intOtp);
+            m.put("email",user.getEmail());
         }
-        User userNext = optUser.get();
-
-        if(!userNext.getRegistered()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username / Password Salah - AUT00FV002");
-        }
-
-        if(!BcryptImpl.verifyHash((user.getUsername()+user.getPassword()),userNext.getPassword())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username / Password Salah - AUT00FV003");
-        }
-        Map<String,Object> m1 = new HashMap<>();
-        m1.put("id", user.getId());
-        m1.put("phn", user.getNoHp());
-        m1.put("ml", user.getEmail());
-        /** khusus testing automation */
-        String token = jwtUtility.doGenerateToken(m1,userNext.getUsername());
-        if(JwtConfig.getTokenEncryptEnable().equals("y")){
-            token = Crypto.performEncrypt(token);
-        }
-        m.put("token",token);
-        m.put("menu",userNext.getAkses().getLtMenu());
-        userRepo.save(user);
         return ResponseEntity.ok().body(m);
     }
 
@@ -108,7 +118,7 @@ public class AppUserDetailService  implements UserDetailsService {
         }
 
         userNext.setRegistered(true);
-        userNext.setUpdatedBy(String.valueOf(userNext.getId()));
+        userNext.setModifiedBy(userNext.getId());
 
         return ResponseEntity.status(HttpStatus.OK).body("Registrasi Berhasil");
     }

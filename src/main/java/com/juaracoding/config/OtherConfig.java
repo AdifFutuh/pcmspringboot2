@@ -10,6 +10,16 @@ public class OtherConfig {
 
     private static String enableLog;
     private static String enablePrint;
+    private static Integer pageDefault;
+
+    public static Integer getPageDefault() {
+        return pageDefault;
+    }
+
+    @Value("${page.default}")
+    private void setPageDefault(Integer pageDefault) {
+        OtherConfig.pageDefault = pageDefault;
+    }
 
     public static String getEnableLog() {
         return enableLog;

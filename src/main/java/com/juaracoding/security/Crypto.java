@@ -51,7 +51,7 @@ public class Crypto {
     }
 
     public static void main(String[] args) {
-        String strToEncrypt = "sa1";//put text to encrypt in here
+        String strToEncrypt = "debytesting16@gmail.com";//put text to encrypt in here
         System.out.println("Encryption Result : "+performEncrypt(strToEncrypt));
 
 //        String strToDecrypt = "0d3f28a8cb0577e4fd42fbfdf2f72eac";//put text to decrypt in here

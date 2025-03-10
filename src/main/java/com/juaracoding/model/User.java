@@ -1,11 +1,14 @@
 package com.juaracoding.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.*;
 
@@ -55,15 +58,19 @@ public class User implements UserDetails {
     @Column(name = "OTP",length = 60)
     private String otp;
 
-    @Column(name = "CreatedBy",updatable = false,nullable = false)
-    private String createdBy="1";
-    @Column(name = "CreatedDate",updatable = false,nullable = false)
-    private Date createdDate = new Date();
+    @Column(name = "CreatedBy",nullable = false,updatable = false)
+    private Long createdBy=1L;
 
-    @Column(name = "UpdatedBy",insertable = false)
-    private String updatedBy="1";
-    @Column(name = "UpdatedDate",insertable = false)
-    private Date updatedDate;
+    @Column(name = "CreatedDate",nullable = false,updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdDate;
+
+    @Column(name = "ModifiedBy",insertable = false)
+    private Long modifiedBy=1L;
+
+    @Column(name = "ModifiedDate",insertable = false)
+    @UpdateTimestamp
+    private LocalDateTime modifiedDate;
 
     public String getPathImage() {
         return pathImage;
@@ -208,37 +215,35 @@ public class User implements UserDetails {
         this.akses = akses;
     }
 
-    public String getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public String getUpdatedBy() {
-        return updatedBy;
+    public Long getModifiedBy() {
+        return modifiedBy;
     }
 
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
+    public void setModifiedBy(Long modifiedBy) {
+        this.modifiedBy = modifiedBy;
     }
 
-    public Date getUpdatedDate() {
-        return updatedDate;
+    public LocalDateTime getModifiedDate() {
+        return modifiedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
-
-
 }

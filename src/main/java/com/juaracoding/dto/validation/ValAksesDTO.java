@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ValAksesDTO {
 
+//    <script>alert('OK'!!)</script> DOOM
     @Pattern(regexp = "^[\\w\\s]{5,50}$",message = "Alfanumerik dengan spasi min 5 maks 50 karakter")
     private String nama;
 

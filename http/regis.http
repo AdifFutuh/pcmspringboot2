@@ -1,22 +1,22 @@
-## Registration
-#POST http://localhost:8083/auth/regis
-#Content-Type: application/json
-#
-#{
-#  "username":"paul.123",
-#  "password":"Paul@1234",
-#  "email":"poll.chihuy@gmail.com",
-#  "alamat":"Bogor Bogor Bogor Bogor Bogor Bogor Bogor ",
-#  "no-hp":"081286111111",
-#  "tanggal-lahir":"1995-12-12",
-#  "nama":"Paul Christian Malau"
-#}
-
-### Verify OTP Regis
-POST http://localhost:8083/auth/verify-regis
+### Registration
+POST http://localhost:8083/auth/regis
 Content-Type: application/json
 
 {
+  "username":"paul.123",
+  "password":"Paul@1234",
   "email":"poll.chihuy@gmail.com",
-  "otp":537074
+  "alamat":"Bogor Bogor Bogor Bogor Bogor Bogor Bogor ",
+  "no-hp":"081286111111",
+  "tanggal-lahir":"1995-12-12",
+  "nama":"Paul Christian Malau"
 }
+
+#### Verify OTP Regis
+#POST http://localhost:8083/auth/verify-regis
+#Content-Type: application/json
+#
+#{
+#  "email":"poll.chihuy@gmail.com",
+#  "otp":537074
+#}

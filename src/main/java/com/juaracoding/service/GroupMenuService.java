@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,7 +90,17 @@ public class GroupMenuService implements IService<GroupMenu> {
 
     @Override
     public ResponseEntity<Object> findByParam(Pageable pageable, String columnName, String value, HttpServletRequest request) {
-        return null;
+
+        Page<GroupMenu> page = null;
+        List<GroupMenu> list = null;
+        switch (columnName) {
+            case "nama": page = groupMenuRepo.findByNamaContainsIgnoreCase(value,pageable);break;
+            case "deskripsi": page = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value,pageable);break;
+            default: page = groupMenuRepo.findAll(pageable);
+        }
+
+//        return ResponseEntity.status(HttpStatus.OK).body(page);
+        return ResponseEntity.status(HttpStatus.OK).body(page.getContent());
     }
 
     public List<RespGroupMenuDTO> converToRespGroupMenuDTO(List<GroupMenu> groupMenus) {
