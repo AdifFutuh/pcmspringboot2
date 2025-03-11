@@ -5,14 +5,12 @@ import com.juaracoding.dto.validation.ValLoginDTO;
 import com.juaracoding.dto.validation.ValRegisDTO;
 import com.juaracoding.dto.validation.ValVerifyOTPRegisDTO;
 import com.juaracoding.service.AppUserDetailService;
+import com.juaracoding.util.SendMailOTP;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
@@ -41,5 +39,15 @@ public class AuthController {
                                               HttpServletRequest request){
 
         return appUserDetailService.verifyRegis(appUserDetailService.convertToEntity(valVerifyOTPRegisDTO),request);
+    }
+
+    @GetMapping("/contoh-email")
+    public String contohSendEmail(){
+        SendMailOTP.verifyRegisOTP("Verifikasi OTP Registrasi",
+                "Paul Christian Malau",
+                "poll.chihuy@gmail.com",
+                "121314"
+                );
+        return "OK";
     }
 }

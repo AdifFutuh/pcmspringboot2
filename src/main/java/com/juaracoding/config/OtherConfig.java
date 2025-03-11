@@ -11,6 +11,17 @@ public class OtherConfig {
     private static String enableLog;
     private static String enablePrint;
     private static Integer pageDefault;
+    private static String smtpEnable;
+
+
+    public static String getSmtpEnable() {
+        return smtpEnable;
+    }
+
+    @Value("${smtp.enable}")
+    private void setSmtpEnable(String smtpEnable) {
+        OtherConfig.smtpEnable = smtpEnable;
+    }
 
     public static Integer getPageDefault() {
         return pageDefault;

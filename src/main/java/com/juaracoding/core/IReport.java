@@ -1,10 +1,17 @@
 package com.juaracoding.core;
 
-public interface IReport<T>{
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
-    public void uploadExcel(T t);//051 060
-    public void downloadExcel(T t);//061 070
-    public void uploadImage(T t);
-    public void downloadImage(T t);
-    public void downloadPdf(T t);
+import java.util.List;
+import java.util.Map;
+
+public interface IReport<G>{
+
+    public ResponseEntity<Object> uploadDataExcel(MultipartFile multipartFile, HttpServletRequest request);//061-070
+    public List<G> convertListWorkBookToListEntity(List<Map<String, String>> workBookData, Long userId);//071-080
+    public void downloadReportExcel(String column, String value, HttpServletRequest request, HttpServletResponse response);//081-090
+    public void generateToPDF(String column, String value, HttpServletRequest request, HttpServletResponse response);//091-100
 }

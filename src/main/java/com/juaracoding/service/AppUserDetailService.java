@@ -9,6 +9,7 @@ import com.juaracoding.repo.UserRepo;
 import com.juaracoding.security.BcryptImpl;
 import com.juaracoding.security.Crypto;
 import com.juaracoding.security.JwtUtility;
+import com.juaracoding.util.SendMailOTP;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -103,6 +104,15 @@ public class AppUserDetailService  implements UserDetailsService {
             m.put("otp",intOtp);
             m.put("email",user.getEmail());
         }
+
+        if(optUser.isPresent()){
+            SendMailOTP.verifyRegisOTP("Verifikasi OTP Registrasi",//di harcode
+                    user.getNama(),
+                    user.getEmail(),
+                    String.valueOf(intOtp)
+            );
+        }
+
         return ResponseEntity.ok().body(m);
     }
 
