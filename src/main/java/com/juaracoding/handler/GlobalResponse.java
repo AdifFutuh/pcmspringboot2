@@ -1,8 +1,13 @@
 package com.juaracoding.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.io.IOException;
 
 public class GlobalResponse {
 
@@ -64,5 +69,47 @@ public class GlobalResponse {
         return new ResponseHandler().handleResponse("Data Ditemukan",
                 HttpStatus.OK,
                 object,null,request);
+    }
+
+    public static ResponseEntity<Object> formatHarusExcel(String errorCode ,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Format Harus Excel",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
+    }
+
+    public static ResponseEntity<Object> fileExcelKosong(String errorCode ,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("File Excel Kosong",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
+    }
+
+    public static ResponseEntity<Object> uploadExcelGagal(String errorCode ,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Upload File Excel Gagal !!",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
+    }
+
+    public static ResponseEntity<Object> uploadExcelBerhasil(HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Upload File Excel Berhasil",
+                HttpStatus.CREATED,
+                null,null,request);
+    }
+
+    public static void manualResponse(HttpServletResponse response, ResponseEntity<Object> resObject){
+        try{
+            response.getWriter().write(convertObjectToJson(resObject.getBody()));
+            response.setStatus(resObject.getStatusCodeValue());
+        }catch (IOException e){
+
+        }
+    }
+
+    public static String convertObjectToJson(Object obj) throws JsonProcessingException {
+
+        if(obj == null){
+            return null;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(obj);
     }
 }

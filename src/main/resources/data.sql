@@ -17,7 +17,6 @@ SET IDENTITY_INSERT [dbproject].[MstGroupMenu] ON
 
 
 
-
     -- ----------------------------
 -- Records of MstMenu
 -- ----------------------------

@@ -53,7 +53,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         request->request.requestMatchers(
                                 "/auth/**",
-                                "/artikel/**"
+                                "/artikel/**",
+                                "/group-menu/excel"
                         ).permitAll().anyRequest().authenticated()).
                 httpBasic(basic -> basic.authenticationEntryPoint(authenticationEntryPoint)).
                 exceptionHandling(Customizer.withDefaults()).

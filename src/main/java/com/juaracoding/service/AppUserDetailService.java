@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -56,6 +55,8 @@ public class AppUserDetailService  implements UserDetailsService {
         m1.put("id", userNext.getId());
         m1.put("phn", userNext.getNoHp());
         m1.put("ml", userNext.getEmail());
+        m1.put("nl", userNext.getNama());
+
         /** khusus testing automation */
         String token = jwtUtility.doGenerateToken(m1,userNext.getUsername());
         if(JwtConfig.getTokenEncryptEnable().equals("y")){

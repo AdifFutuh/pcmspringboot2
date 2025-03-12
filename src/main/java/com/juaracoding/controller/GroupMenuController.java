@@ -4,6 +4,7 @@ import com.juaracoding.config.OtherConfig;
 import com.juaracoding.dto.validation.ValGroupMenuDTO;
 import com.juaracoding.service.GroupMenuService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +82,13 @@ public class GroupMenuController {
         return groupMenuService.findByParam(pageable,column,value,request);
     }
 
+    @PostMapping("/upload-excel")
+    @PreAuthorize("hasAuthority('Group-Menu')")
+    public ResponseEntity<Object> uploadExcel(
+            @RequestParam(value = "file") MultipartFile file, HttpServletRequest request){
+        return groupMenuService.uploadDataExcel(file,request);
+    }
+
     private String sortColumnByMap(String sortBy){
         switch (sortBy){
             case "nama":sortBy = "nama";break;
@@ -87,6 +97,24 @@ public class GroupMenuController {
         }
         return sortBy;
     }
+
+    @GetMapping("/excel")
+    public void downloadExcel(
+            @RequestParam(value = "column") String column,
+            @RequestParam(value = "value") String value,
+            HttpServletRequest request,
+            HttpServletResponse response){
+        groupMenuService.downloadReportExcel(column,value,request,response);
+    }
+
+//    private String sortColumnByMap(String sortBy){
+//        switch (sortBy){
+//            case "nama":sortBy = "nama";break;
+//            case "deskripsi":sortBy = "deskripsi";break;
+//            default:sortBy = "id";break;
+//        }
+//        return sortBy;
+//    }
 
     @GetMapping("/cobain")
     @PreAuthorize("hasAuthority('Group-Menu')")
