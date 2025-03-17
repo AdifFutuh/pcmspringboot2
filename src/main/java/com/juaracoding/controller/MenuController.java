@@ -1,8 +1,8 @@
 package com.juaracoding.controller;
 
 import com.juaracoding.config.OtherConfig;
-import com.juaracoding.dto.validation.ValGroupMenuDTO;
-import com.juaracoding.service.GroupMenuService;
+import com.juaracoding.dto.validation.ValMenuDTO;
+import com.juaracoding.service.MenuService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -20,51 +20,51 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("group-menu")
-public class GroupMenuController {
+@RequestMapping("menu")
+public class MenuController {
 
     @Autowired
-    private GroupMenuService groupMenuService;
+    private MenuService menuService;
 
     private Map<String,String> mapFilter = new HashMap<>();
 
     @GetMapping
-    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> findAll(HttpServletRequest request){
         Pageable pageable = PageRequest.of(0, OtherConfig.getPageDefault(), Sort.by("id"));
-        return groupMenuService.findAll(pageable,request);
+        return menuService.findAll(pageable,request);
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('Group-Menu')")
-    public ResponseEntity<Object> save(@Valid @RequestBody ValGroupMenuDTO valGroupMenuDTO, HttpServletRequest request){
-        return groupMenuService.save(groupMenuService.converToEntity(valGroupMenuDTO),request);
+    @PreAuthorize("hasAuthority('Menu')")
+    public ResponseEntity<Object> save(@Valid @RequestBody ValMenuDTO valMenuDTO, HttpServletRequest request){
+        return menuService.save(menuService.converToEntity(valMenuDTO),request);
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> update(
             @PathVariable(value = "id") Long id,
-            @Valid @RequestBody ValGroupMenuDTO valGroupMenuDTO, HttpServletRequest request){
-        return groupMenuService.update(id,groupMenuService.converToEntity(valGroupMenuDTO),request);
+            @Valid @RequestBody ValMenuDTO valMenuDTO, HttpServletRequest request){
+        return menuService.update(id, menuService.converToEntity(valMenuDTO),request);
     }
 
     @DeleteMapping
-    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> delete(
             @PathVariable(value = "id") Long id, HttpServletRequest request){
-        return groupMenuService.delete(id,request);
+        return menuService.delete(id,request);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> findById(
             @PathVariable(value = "id") Long id, HttpServletRequest request){
-        return groupMenuService.findById(id,request);
+        return menuService.findById(id,request);
     }
 
     @GetMapping("/{sort}/{sortBy}/{page}")
-    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> findByParam(
             @PathVariable(value = "sort") String sort,
             @PathVariable(value = "sortBy") String sortBy,
@@ -79,20 +79,21 @@ public class GroupMenuController {
             case "asc":pageable = PageRequest.of(page, size, Sort.by(sortBy));break;
             default: pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         }
-        return groupMenuService.findByParam(pageable,column,value,request);
+        return menuService.findByParam(pageable,column,value,request);
     }
 
     @PostMapping("/upload-excel")
-    @PreAuthorize("hasAuthority('Group-Menu')")
+    @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> uploadExcel(
             @RequestParam(value = "file") MultipartFile file, HttpServletRequest request){
-        return groupMenuService.uploadDataExcel(file,request);
+        return menuService.uploadDataExcel(file,request);
     }
 
     private String sortColumnByMap(String sortBy){
         switch (sortBy){
             case "nama":sortBy = "nama";break;
-            case "deskripsi":sortBy = "deskripsi";break;
+            case "path":sortBy = "path";break;
+            case "group":sortBy = "group";break;
             default:sortBy = "id";break;
         }
         return sortBy;
@@ -104,7 +105,7 @@ public class GroupMenuController {
             @RequestParam(value = "value") String value,
             HttpServletRequest request,
             HttpServletResponse response){
-        groupMenuService.downloadReportExcel(column,value,request,response);
+        menuService.downloadReportExcel(column,value,request,response);
     }
 
     @GetMapping("/pdf")
@@ -113,24 +114,6 @@ public class GroupMenuController {
             @RequestParam(value = "value") String value,
             HttpServletRequest request,
             HttpServletResponse response){
-//        groupMenuService.generateToPDFManual(column,value,request,response);
-        groupMenuService.generateToPDF(column,value,request,response);
+        menuService.generateToPDF(column,value,request,response);
     }
-
-//    private String sortColumnByMap(String sortBy){
-//        switch (sortBy){
-//            case "nama":sortBy = "nama";break;
-//            case "deskripsi":sortBy = "deskripsi";break;
-//            default:sortBy = "id";break;
-//        }
-//        return sortBy;
-//    }
-
-//    @GetMapping("/cobain")
-//    @PreAuthorize("hasAuthority('Group-Menu')")
-//    public String cobain(){
-//        return "OK";
-//    }
-
-
 }

@@ -26,6 +26,22 @@
     </properties>
 
     <dependencies>
+<!--        TIBCO-->
+        <!--		START LIBRARY REPORT THYMELEAF -->
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/html2pdf -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>html2pdf</artifactId>
+            <version>5.0.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <!--		END LIBRARY REPORT THYMELEAF -->
+
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>

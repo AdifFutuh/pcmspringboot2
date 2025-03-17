@@ -1,4 +1,4 @@
-package com.juaracoding.dto.validation;
+package com.juaracoding.dto.response;
 
 
 import com.juaracoding.dto.rel.RelMenuDTO;
@@ -6,15 +6,23 @@ import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
-public class ValAksesDTO {
+public class RespAksesDTO {
 
-    @Pattern(regexp = "^[\\w\\s]{5,50}$",message = "Alfanumerik dengan spasi min 5 maks 50 karakter")
+    private Long id;
+
     private String nama;
 
-    @Pattern(regexp = "^[\\w\\s]{5,100}$",message = "Alfanumerik dengan spasi min 5 maks 100 karakter")
     private String deskripsi;
 
     private List<RelMenuDTO> ltMenu;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNama() {
         return nama;

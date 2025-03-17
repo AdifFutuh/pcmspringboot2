@@ -1,29 +1,27 @@
-package com.juaracoding.dto.validation;
+package com.juaracoding.dto.response;
 
 
 import com.juaracoding.dto.rel.RelGroupMenuDTO;
-import com.juaracoding.dto.report.RepGroupMenuDTO;
-import com.juaracoding.model.GroupMenu;
 import com.juaracoding.util.ConstantsMessage;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import org.apache.tomcat.util.bcel.Const;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+public class RespMenuDTO {
 
-public class ValMenuDTO {
-
-    @Pattern(regexp = "^[\\w\\s]{5,50}$",message = ConstantsMessage.VAL_MENU_NAMA)
+    private Long id;
     private String nama;
 
-    @Pattern(regexp = "^[\\w\\s\\/]{5,50}$",message = ConstantsMessage.VAL_MENU_PATH)
     private String path;
 
-    @NotNull(message = ConstantsMessage.VAL_MENU_GROUP)
     private RelGroupMenuDTO groupMenu;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNama() {
         return nama;

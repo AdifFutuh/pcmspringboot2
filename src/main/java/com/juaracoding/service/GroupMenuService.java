@@ -22,8 +22,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -45,6 +48,12 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
     private TransformPagination transformPagination;
 
     StringBuilder sBuild = new StringBuilder();
+
+    @Autowired
+    private SpringTemplateEngine springTemplateEngine;
+
+    @Autowired
+    private PdfGenerator pdfGenerator;
 
 
     @Override
@@ -74,7 +83,7 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
             }
 
             GroupMenu nextGroupMenu = optionalGroupMenu.get();
-            nextGroupMenu.setCreatedBy(Long.parseLong(mapToken.get("userId").toString()));
+            nextGroupMenu.setModifiedBy(Long.parseLong(mapToken.get("userId").toString()));
             nextGroupMenu.setNama(groupMenu.getNama());
             nextGroupMenu.setDeskripsi(groupMenu.getDeskripsi());
 
@@ -232,6 +241,76 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
 
     @Override
     public void generateToPDF(String column, String value, HttpServletRequest request, HttpServletResponse response) {
+        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
+        List<GroupMenu> groupMenuList = null;
+        switch (column){
+            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);
+            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);
+            default : groupMenuList = groupMenuRepo.findAll();
+        }
+
+        List<RespGroupMenuDTO> lt = converToRespGroupMenuDTO(groupMenuList);
+        if(lt.isEmpty()){
+            GlobalResponse.manualResponse(response,GlobalResponse.dataTidakDitemukan("USM01FV091",request));
+            return;
+        }
+        int intRespGroupMenuDTOList = lt.size();
+        Map<String,Object> map = new HashMap<>();// ini untuk menampung seluruh data yang akan di oper ke file html
+        String strHtml = null;
+        Context context = new Context();
+        Map<String,Object> mapColumnName = GlobalFunction.convertClassToMap(new RespGroupMenuDTO());// ini diubah
+        List<String> listTemp = new ArrayList<>();
+        List<String> listHelper = new ArrayList<>();
+        for (Map.Entry<String,Object> entry : mapColumnName.entrySet()) {
+            listTemp.add(GlobalFunction.camelToStandard(entry.getKey()));
+            listHelper.add(entry.getKey());
+        }
+        Map<String,Object> mapTemp = null;
+        List<Map<String,Object>> listMap = new ArrayList<>();
+        for(int i=0;i<intRespGroupMenuDTOList;i++){
+            mapTemp = GlobalFunction.convertClassToMap(lt.get(i));
+            listMap.add(mapTemp);
+        }
+
+
+        map.put("title","REPORT DATA GROUP MENU");
+        map.put("listKolom",listTemp);
+        map.put("listHelper",listHelper);
+        map.put("timestamp",LocalDateTime.now());
+        map.put("totalData",intRespGroupMenuDTOList);
+        map.put("listContent",listMap);
+        map.put("username",mapToken.get("namaLengkap"));
+        context.setVariables(map);
+        strHtml = springTemplateEngine.process("global-report",context);
+        pdfGenerator.htmlToPdf(strHtml,"group-menu",response);
+    }
+
+    public void generateToPDFManual(String column, String value, HttpServletRequest request, HttpServletResponse response) {
+        Map<String,Object> mapToken = GlobalFunction.extractToken(request);
+        List<GroupMenu> groupMenuList = null;
+        switch (column){
+            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);
+            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);
+            default : groupMenuList = groupMenuRepo.findAll();
+        }
+
+        List<RespGroupMenuDTO> lt = converToRespGroupMenuDTO(groupMenuList);
+        if(lt.isEmpty()){
+            GlobalResponse.manualResponse(response,GlobalResponse.dataTidakDitemukan("USM01FV091",request));
+            return;
+        }
+
+        Map<String,Object> map = new HashMap<>();// ini untuk menampung seluruh data yang akan di oper ke file html
+        String strHtml = null;
+        Context context = new Context();
+        map.put("title","REPORT GROUP MENU");
+        map.put("timestamp",LocalDateTime.now());
+        map.put("totalData",lt.size());
+        map.put("listContent",groupMenuList);
+        map.put("username",mapToken.get("namaLengkap"));
+        context.setVariables(map);
+        strHtml = springTemplateEngine.process("/report/groupmenureport",context);
+        pdfGenerator.htmlToPdf(strHtml,"group-menu",response);
 
     }
 

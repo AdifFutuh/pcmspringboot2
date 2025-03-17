@@ -11,10 +11,5 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
 
-//        String s = "public static void main(String[] args) {\n" +
-//                "        SpringApplication.run(Main.class, args);\n" +
-//                "    }";
-        Object obj = new Object();
-//        obj.exec(s);
     }
 }
