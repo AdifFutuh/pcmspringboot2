@@ -134,7 +134,7 @@ public class MenuService implements IService<Menu>, IReport<Menu> {
             LoggingFile.logException("MenuService","findById(Long id, HttpServletRequest request) -- Line 122 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.terjadiKesalahan("USM02FE041",request);
         }
-        return GlobalResponse.dataDitemukan(optionalMenu.get(),request);
+        return GlobalResponse.dataDitemukan(modelMapper.map(optionalMenu.get(),RespMenuDTO.class),request);
     }
 
     @Override
@@ -322,12 +322,13 @@ public class MenuService implements IService<Menu>, IReport<Menu> {
     public List<RepMenuDTO> converToRepMenuDTO(List<Menu> menus) {
         List<RepMenuDTO> lt = new ArrayList<>();
         for (Menu menu : menus) {
+            Object object = menu.getGroupMenu();//untuk handling jika nilainya berisi null
             RepMenuDTO repMenuDTO = new RepMenuDTO();
             repMenuDTO.setId(menu.getId());
             repMenuDTO.setNama(menu.getNama());
             repMenuDTO.setPath(menu.getPath());
-            repMenuDTO.setNamaGroup(menu.getGroupMenu().getNama());
-            repMenuDTO.setDeskripsiGroup(menu.getGroupMenu().getDeskripsi());
+            repMenuDTO.setNamaGroup(object==null?"":menu.getGroupMenu().getNama());//ternary operator untuk handling null value
+            repMenuDTO.setDeskripsiGroup(object==null?"":menu.getGroupMenu().getDeskripsi());//ternary operator untuk handling null value
             lt.add(repMenuDTO);
         }
         return lt;

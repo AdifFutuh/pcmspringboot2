@@ -1,11 +1,13 @@
 package com.juaracoding.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "MstMenu")
@@ -23,7 +25,7 @@ public class Menu {
     private String path;
 
     @ManyToOne
-    @JoinColumn(name = "IDGroupMenu", nullable = false,foreignKey = @ForeignKey(name = "fk-to-groupmenu"))
+    @JoinColumn(name = "IDGroupMenu",foreignKey = @ForeignKey(name = "fk-to-groupmenu"))
     private GroupMenu groupMenu;
 
     @Column(name = "CreatedBy",nullable = false,updatable = false)

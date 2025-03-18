@@ -280,6 +280,27 @@ public class DataGenerator {
         return alamat;
     }
 
+    public String dataNamaAkses() {
+        isValid = false;
+        intLoop = 0;
+        String alamat = "";
+        while(!isValid){
+            try{
+                alamat = faker.team().name();
+                matcher = Pattern.compile("^[\\w\\s]{5,20}$").matcher(alamat);
+                isValid = matcher.find();
+                if(intLoop==250){
+                    System.out.println("SUDAH MENCOBA MEMBUAT DATA Alamat SEBANYAK 250 KALI DAN GAGAL !!");
+                    System.exit(1);
+                }
+                intLoop++;
+            }catch (Exception e){
+                isValid = false;
+            }
+        }
+        return alamat;
+    }
+
     public String dataPassword() {
         isValid = false;
         intLoop = 0;

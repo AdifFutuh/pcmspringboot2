@@ -49,7 +49,7 @@ public class AksesController {
         return aksesService.update(id, aksesService.converToEntity(valAksesDTO),request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('Akses')")
     public ResponseEntity<Object> delete(
             @PathVariable(value = "id") Long id, HttpServletRequest request){

@@ -53,11 +53,8 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseHandler().handleResponse("Data Tidak Valid", (HttpStatus) status,apiSubErrors,"X01001",request);
     }
 
-//    @ExceptionHandler(MaxUploadSizeExceededException.class)
-//    public ResponseEntity<Object> maxUploadSizeExceededException(MaxUploadSizeExceededException ex, HttpServletRequest request){
-//        LoggingFile.logException("GlobalExceptionHandler","maxUploadSizeExceededException "+ RequestCapture.allRequest(request),ex, OtherConfig.getEnableLog());
-//        return new ResponseHandler().handleResponse("Ukuran File Melebihi Batas",HttpStatus.BAD_REQUEST,null,"X02001",request);
-//    }
+
+
 
     @Override
     protected ResponseEntity<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -68,7 +65,7 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UnexpectedRollbackException.class)
     public ResponseEntity<Object> unexpectedRollbackException(UnexpectedRollbackException ex, HttpServletRequest request){
         LoggingFile.logException("GlobalExceptionHandler","unexpectedRollbackException "+ RequestCapture.allRequest(request),ex, OtherConfig.getEnableLog());
-        return new ResponseHandler().handleResponse("Ukuran File Melebihi Batas",HttpStatus.BAD_REQUEST,null,"X02002",request);
+        return new ResponseHandler().handleResponse("Rollback untuk Transaksi Telah dilakukan",HttpStatus.BAD_REQUEST,null,"X02002",request);
     }
 
     @ExceptionHandler(MultipartException.class)

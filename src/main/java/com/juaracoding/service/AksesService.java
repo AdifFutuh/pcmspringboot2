@@ -5,6 +5,7 @@ import com.juaracoding.config.OtherConfig;
 import com.juaracoding.core.IReport;
 import com.juaracoding.core.IService;
 import com.juaracoding.dto.report.RepAksesDTO;
+import com.juaracoding.dto.response.RespAksesDTO;
 import com.juaracoding.dto.validation.ValAksesDTO;
 import com.juaracoding.handler.GlobalResponse;
 import com.juaracoding.model.Akses;
@@ -132,7 +133,7 @@ public class AksesService implements IService<Akses>, IReport<Akses> {
             LoggingFile.logException("AksesService","findById(Long id, HttpServletRequest request) -- Line 122 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.terjadiKesalahan("USM03FE041",request);
         }
-        return GlobalResponse.dataDitemukan(optionalAkses.get(),request);
+        return GlobalResponse.dataDitemukan(modelMapper.map(optionalAkses.get(), RespAksesDTO.class),request);
     }
 
     @Override
@@ -319,6 +320,7 @@ public class AksesService implements IService<Akses>, IReport<Akses> {
             RepAksesDTO repAksesDTO = new RepAksesDTO();
             repAksesDTO.setId(akses.getId());
             repAksesDTO.setNama(akses.getNama());
+            repAksesDTO.setDeskripsi(akses.getDeskripsi());
             lt.add(repAksesDTO);
         }
         return lt;

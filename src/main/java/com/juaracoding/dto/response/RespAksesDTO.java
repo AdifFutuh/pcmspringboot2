@@ -1,12 +1,16 @@
 package com.juaracoding.dto.response;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.juaracoding.dto.rel.RelMenuDTO;
 import jakarta.validation.constraints.Pattern;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RespAksesDTO {
+public class RespAksesDTO  {
+
 
     private Long id;
 

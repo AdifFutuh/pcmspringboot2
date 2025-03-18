@@ -30,7 +30,7 @@ public class ExcelReader {
 	private List<Map<String,String>> list = new ArrayList<>();
 
 	public static boolean hasWorkBookFormat(MultipartFile file) {
-		System.out.println(file.getContentType());
+//		System.out.println(file.getContentType());
 		if (!TYPE.equals(file.getContentType())) {
 			return false;
 		}

@@ -49,7 +49,7 @@ public class MenuController {
         return menuService.update(id, menuService.converToEntity(valMenuDTO),request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> delete(
             @PathVariable(value = "id") Long id, HttpServletRequest request){

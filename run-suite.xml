@@ -5,6 +5,7 @@
         <classes>
             <class name="com.juaracoding.controller.GroupMenuControllerTest"></class>
             <class name="com.juaracoding.controller.MenuControllerTest"></class>
+            <class name="com.juaracoding.controller.AksesControllerTest"></class>
         </classes>
     </test>
 </suite>

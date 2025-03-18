@@ -49,7 +49,7 @@ public class GroupMenuController {
         return groupMenuService.update(id,groupMenuService.converToEntity(valGroupMenuDTO),request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('Group-Menu')")
     public ResponseEntity<Object> delete(
             @PathVariable(value = "id") Long id, HttpServletRequest request){
