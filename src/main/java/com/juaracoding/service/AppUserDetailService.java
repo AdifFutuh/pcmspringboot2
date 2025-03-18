@@ -1,6 +1,8 @@
 package com.juaracoding.service;
 
 import com.juaracoding.config.JwtConfig;
+import com.juaracoding.config.OtherConfig;
+import com.juaracoding.config.SMTPConfig;
 import com.juaracoding.dto.validation.ValLoginDTO;
 import com.juaracoding.dto.validation.ValRegisDTO;
 import com.juaracoding.dto.validation.ValVerifyOTPRegisDTO;
@@ -79,7 +81,6 @@ public class AppUserDetailService  implements UserDetailsService {
             user.setPassword(BcryptImpl.hash(user.getUsername()+user.getPassword()));
             user.setOtp(BcryptImpl.hash(String.valueOf(intOtp)));
             userRepo.save(user);
-            m.put("otp",intOtp);
             m.put("email",user.getEmail());
         }else{
             User userNext = optUser.get();
@@ -102,11 +103,13 @@ public class AppUserDetailService  implements UserDetailsService {
             userNext.setTanggalLahir(user.getTanggalLahir());
             userNext.setModifiedBy(userNext.getId());
             userNext.setPassword(user.getUsername()+user.getPassword());
-            m.put("otp",intOtp);
             m.put("email",user.getEmail());
         }
 
-        if(optUser.isPresent()){
+        if(OtherConfig.getEnableAutomationTest().equals("y")){
+            m.put("otp",intOtp);//ini digunakan hanya untuk automation testing ataupun unit testing saja....
+        }
+        if(OtherConfig.getSmtpEnable().equals("y")){
             SendMailOTP.verifyRegisOTP("Verifikasi OTP Registrasi",//di harcode
                     user.getNama(),
                     user.getEmail(),

@@ -3,6 +3,7 @@
 <suite name="Suite Semua">
     <test name="Test-All">
         <classes>
+            <class name="com.juaracoding.controller.AuthControllerTest"></class>
             <class name="com.juaracoding.controller.GroupMenuControllerTest"></class>
             <class name="com.juaracoding.controller.MenuControllerTest"></class>
             <class name="com.juaracoding.controller.AksesControllerTest"></class>

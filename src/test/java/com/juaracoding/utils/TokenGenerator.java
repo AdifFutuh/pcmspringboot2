@@ -30,7 +30,7 @@ public class TokenGenerator {
              * dilakukan estafet pemanggilan constructor ini, jadi otomatis akan di skip proses request token lagi
              * dan value token sebelumnya di oper ke proses testing selanjut nya
              */
-            this.token = "Bearer "+token;//gunakan Bearer sebelum token
+            this.token = token;//gunakan Bearer sebelum token
         }
     }
 

@@ -25,21 +25,19 @@ public class ValVerifyOTPRegisDTO {
     @NotEmpty
     private String email;
 
-    public @Pattern(regexp = "^([0-9]{6})$",
-            message = "Format OTP Wajib 6 Angka") String getOtp() {
+    public String getOtp() {
         return otp;
     }
 
-    public void setOtp(@Pattern(regexp = "^([0-9]{6})$",
-            message = "Format OTP Wajib 6 Angka") String otp) {
+    public void setOtp(String otp) {
         this.otp = otp;
     }
 
-    public @NotNull @NotBlank @NotEmpty String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(@NotNull @NotBlank @NotEmpty String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 }

@@ -307,9 +307,9 @@ public class DataGenerator {
         String password = "";
         while(!isValid){
             try{
-                password = faker.internet().password(8,13,true,true,true);
-                matcher = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[_#\\-$])(?!.*?[^A-Za-z0-9_#\\-$]).{8,}$").matcher(password);
-//                System.out.println(password);
+                password = faker.internet().password(8,15,true,true,true);
+//                matcher = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[_#\\-$])(?!.*?[^A-Za-z0-9_#\\-$]).{8,}$").matcher(password);
+                matcher = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@_#\\-$])[\\w].{8,15}$").matcher(password);
                 isValid = matcher.find();
 //                System.out.println(isValid);
                 if(intLoop==200){

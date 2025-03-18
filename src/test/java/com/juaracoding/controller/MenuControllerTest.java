@@ -36,10 +36,6 @@ public class MenuControllerTest extends AbstractTestNGSpringContextTests {
     private Menu menu;
     private Random rand;//optional (KTP 16 Digit rand.nextLong(1111111111111111L,9999999999999999L) )
     private String token;
-    private Integer status;
-    private Boolean success;
-    private String message;
-    private String data;
     private DataGenerator dataGenerator;
 
 //    passed
@@ -184,8 +180,8 @@ public class MenuControllerTest extends AbstractTestNGSpringContextTests {
 
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();//body
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         /** untuk case ini pengambilan datanya menggunakan List , Jadi dipassing ke object List<Map<String,Object>> */
         List<Map<String,Object>> lt = jsonPath.getList("data.content");
 
@@ -228,8 +224,8 @@ public class MenuControllerTest extends AbstractTestNGSpringContextTests {
 
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();//body
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         Assert.assertTrue(Boolean.parseBoolean(jsonPath.get("success").toString()));// kalau true ini lolos
         Assert.assertEquals(responseCode,201);
         Assert.assertEquals(Integer.parseInt(jsonPath.get("status").toString()),201);
@@ -283,8 +279,8 @@ public class MenuControllerTest extends AbstractTestNGSpringContextTests {
                 header("accept","*/*").
                 header(AuthControllerTest.AUTH_HEADER,token).
                 request(Method.DELETE, pathVariable);
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();
         Assert.assertTrue(Boolean.parseBoolean(jsonPath.get("success").toString()));// kalau true ini lolos

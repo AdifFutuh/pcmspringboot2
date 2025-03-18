@@ -8,7 +8,6 @@ import com.juaracoding.utils.TokenGenerator;
 import io.restassured.http.Method;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,10 +30,6 @@ public class GroupMenuControllerTest extends AbstractTestNGSpringContextTests {
     private GroupMenu groupMenu;
     private Random rand;//optional (KTP 16 Digit rand.nextLong(1111111111111111L,9999999999999999L) )
     private String token;
-    private Integer status;
-    private Boolean success;
-    private String message;
-    private String data;
     private DataGenerator dataGenerator;
 
 //    passed
@@ -215,8 +210,8 @@ public class GroupMenuControllerTest extends AbstractTestNGSpringContextTests {
 
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();//body
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         Assert.assertTrue(Boolean.parseBoolean(jsonPath.get("success").toString()));// kalau true ini lolos
         Assert.assertEquals(responseCode,201);
         Assert.assertEquals(Integer.parseInt(jsonPath.get("status").toString()),201);
@@ -270,8 +265,8 @@ public class GroupMenuControllerTest extends AbstractTestNGSpringContextTests {
                 header("accept","*/*").
                 header(AuthControllerTest.AUTH_HEADER,token).
                 request(Method.DELETE, pathVariable);
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();
         Assert.assertTrue(Boolean.parseBoolean(jsonPath.get("success").toString()));// kalau true ini lolos

@@ -29,13 +29,14 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         /** Response Header */
         response.setHeader("Content-Type", "application/json");
         int intStatus = response.getStatus();
+        intStatus = intStatus==200?HttpServletResponse.SC_UNAUTHORIZED:HttpServletResponse.SC_FORBIDDEN;
         /** Response Code */
-        response.setStatus(intStatus==200?HttpServletResponse.SC_UNAUTHORIZED:HttpServletResponse.SC_FORBIDDEN);
+        response.setStatus(intStatus);
         /** Response Body */
         Map<String,Object> data = new HashMap<>();
-        data.put("status", false);
+        data.put("success",false);
 //        data.put("apagitu","Ini Tambahan Aja");
-//        data.put("timestamp", LocalDateTime.now());
+        data.put("status", intStatus);
         data.put("timestamp", Calendar.getInstance().getTime());
         data.put("error",authException.getMessage());
         response.getOutputStream().println(mapper.writeValueAsString(data));

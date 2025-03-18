@@ -8,7 +8,6 @@ import com.juaracoding.utils.TokenGenerator;
 import io.restassured.http.Method;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import org.json.simple.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,8 +152,8 @@ public class AksesControllerTest extends AbstractTestNGSpringContextTests {
                 request(Method.GET,pathVariable);
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();//body
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         /** untuk case ini pengambilan datanya menggunakan List , Jadi dipassing ke object List<Map<String,Object>> */
         List<Map<String,Object>> ltAkses = jsonPath.getList("data.content");
 
@@ -187,8 +186,8 @@ public class AksesControllerTest extends AbstractTestNGSpringContextTests {
 
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();//body
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         /** untuk case ini pengambilan datanya menggunakan List , Jadi dipassing ke object List<Map<String,Object>> */
         List<Map<String,Object>> ltAkses = jsonPath.getList("data.content");//bentuk List Awal
 
@@ -228,8 +227,8 @@ public class AksesControllerTest extends AbstractTestNGSpringContextTests {
 
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();//body
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         Assert.assertTrue(Boolean.parseBoolean(jsonPath.get("success").toString()));// kalau true ini lolos
         Assert.assertEquals(responseCode,201);
         Assert.assertEquals(Integer.parseInt(jsonPath.get("status").toString()),201);
@@ -283,8 +282,8 @@ public class AksesControllerTest extends AbstractTestNGSpringContextTests {
                 header("accept","*/*").
                 header(AuthControllerTest.AUTH_HEADER,token).
                 request(Method.DELETE, pathVariable);
-        ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        ResponseBody responseBody = response.getBody();
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         int responseCode = response.statusCode();
         JsonPath jsonPath = response.jsonPath();
         Assert.assertTrue(Boolean.parseBoolean(jsonPath.get("success").toString()));// kalau true ini lolos

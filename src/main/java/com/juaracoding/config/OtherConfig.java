@@ -12,7 +12,17 @@ public class OtherConfig {
     private static String enablePrint;
     private static Integer pageDefault;
     private static String smtpEnable;
+    private static String enableAutomationTest;
 
+
+    public static String getEnableAutomationTest() {
+        return enableAutomationTest;
+    }
+
+    @Value("${enable.automation.test}")
+    private void setEnableAutomationTest(String enableAutomationTest) {
+        OtherConfig.enableAutomationTest = enableAutomationTest;
+    }
 
     public static String getSmtpEnable() {
         return smtpEnable;
