@@ -7,7 +7,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.1</version>
+<!--        <version>3.4.1</version>-->
+        <version>3.3.8</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -26,6 +27,15 @@
     </properties>
 
     <dependencies>
+
+        <!--		untuk dokumentasi api -> OPENAPI SWAGGER-->
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
 <!--        TIBCO-->
         <!--		START LIBRARY REPORT THYMELEAF -->
         <!-- https://mvnrepository.com/artifact/com.itextpdf/html2pdf -->
@@ -47,13 +57,6 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>5.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>1.0.2</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.sun.mail/jakarta.mail -->
@@ -83,6 +86,7 @@
         </dependency>
 
         <!--		end security-->
+
 
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -147,12 +151,12 @@
             <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>4.2.0</version>
-        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
+<!--            <version>4.2.0</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on -->
         <dependency>
@@ -167,12 +171,36 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+<!--        =================================UNIT TESTING===================================================-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.1.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.10.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
+<!-- -DskipTests=true -->
     </dependencies>
 
     <build>

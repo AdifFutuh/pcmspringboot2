@@ -41,7 +41,7 @@ public class MenuController {
         return menuService.save(menuService.converToEntity(valMenuDTO),request);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> update(
             @PathVariable(value = "id") Long id,

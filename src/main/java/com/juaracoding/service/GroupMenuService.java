@@ -132,7 +132,7 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
             LoggingFile.logException("GroupMenuService","findById(Long id, HttpServletRequest request) -- Line 122 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.terjadiKesalahan("USM01FE041",request);
         }
-        return GlobalResponse.dataDitemukan(optionalGroupMenu.get(),request);
+        return GlobalResponse.dataDitemukan(modelMapper.map(optionalGroupMenu.get(),RespGroupMenuDTO.class),request);
     }
 
     @Override

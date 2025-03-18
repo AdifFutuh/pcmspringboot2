@@ -1,6 +1,7 @@
 package com.juaracoding.repo;
 
 
+import com.juaracoding.model.Menu;
 import com.juaracoding.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     /** Select * From MstUser WHERE Username = ? */
     public Optional<User> findByUsername(String value);
+
+    /** digunakan hanya untuk unit testing */
+    public Optional<Menu> findTopByOrderByIdDesc();
 }

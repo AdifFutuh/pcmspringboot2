@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 
 public class ValMenuDTO {
 
-    @Pattern(regexp = "^[\\w\\s]{5,50}$",message = ConstantsMessage.VAL_MENU_NAMA)
+    @Pattern(regexp = "^[\\w\\s]{5,20}$",message = ConstantsMessage.VAL_MENU_NAMA)
     private String nama;
 
-    @Pattern(regexp = "^[\\w\\s\\/]{5,50}$",message = ConstantsMessage.VAL_MENU_PATH)
+    @Pattern(regexp = "^[\\w\\/-]{5,20}$",message = ConstantsMessage.VAL_MENU_PATH)
     private String path;
 
     @NotNull(message = ConstantsMessage.VAL_MENU_GROUP)

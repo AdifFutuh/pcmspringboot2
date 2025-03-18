@@ -54,7 +54,8 @@ public class SecurityConfiguration {
                         request->request.requestMatchers(
                                 "/auth/**",
                                 "/artikel/**",
-                                "/group-menu/excel"
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
                         ).permitAll().anyRequest().authenticated()).
                 httpBasic(basic -> basic.authenticationEntryPoint(authenticationEntryPoint)).
                 exceptionHandling(Customizer.withDefaults()).

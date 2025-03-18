@@ -41,7 +41,7 @@ public class GroupMenuController {
         return groupMenuService.save(groupMenuService.converToEntity(valGroupMenuDTO),request);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Group-Menu')")
     public ResponseEntity<Object> update(
             @PathVariable(value = "id") Long id,

@@ -41,7 +41,7 @@ public class AksesController {
         return aksesService.save(aksesService.converToEntity(valAksesDTO),request);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('Akses')")
     public ResponseEntity<Object> update(
             @PathVariable(value = "id") Long id,
