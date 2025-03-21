@@ -117,7 +117,7 @@ public class AuthControllerTest extends AbstractTestNGSpringContextTests {
                 request(Method.POST, "auth/verify-regis");
         int intResponse = response.getStatusCode();
         ResponseBody responseBody = response.getBody();
-        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
+//        System.out.println(responseBody.asPrettyString());//mau print isi dari response body nya dijadiin prety string
         if(intResponse == 200){
             isOk=true;
         }
@@ -127,6 +127,9 @@ public class AuthControllerTest extends AbstractTestNGSpringContextTests {
 
     @Test(priority = 30)
     void loginEstafet(){
+        if(!isOk){//artinya step sebelumnya gagal, jadi step ini tidak perlu dieksekusi
+            return;
+        }
         /** masukkan credentials admin sebagai default untuk proses login */
         req.put("username", username);//melakukan login dari proses estafet registrasi
         req.put("password",password);//melakukan login dari proses estafet registrasi

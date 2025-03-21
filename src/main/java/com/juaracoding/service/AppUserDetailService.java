@@ -3,18 +3,24 @@ package com.juaracoding.service;
 import com.juaracoding.config.JwtConfig;
 import com.juaracoding.config.OtherConfig;
 import com.juaracoding.config.SMTPConfig;
+import com.juaracoding.dto.response.MenuLoginDTO;
 import com.juaracoding.dto.validation.ValLoginDTO;
 import com.juaracoding.dto.validation.ValRegisDTO;
 import com.juaracoding.dto.validation.ValVerifyOTPRegisDTO;
+import com.juaracoding.handler.GlobalResponse;
+import com.juaracoding.model.Akses;
 import com.juaracoding.model.User;
 import com.juaracoding.repo.UserRepo;
 import com.juaracoding.security.BcryptImpl;
 import com.juaracoding.security.Crypto;
 import com.juaracoding.security.JwtUtility;
+import com.juaracoding.util.GlobalFunction;
 import com.juaracoding.util.SendMailOTP;
+import com.juaracoding.util.TransformationData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +30,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+/**
+ *  Modul Code - 00
+ *  Platform Code - AUT
+ */
 @Service
 @Transactional
 public class AppUserDetailService  implements UserDetailsService {
@@ -43,15 +53,15 @@ public class AppUserDetailService  implements UserDetailsService {
         Optional<User> optUser = userRepo.findByUsername(user.getUsername());
         Map<String,Object> m = new HashMap<>();
         if(!optUser.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username / Password Salah - AUT00FV001");
+            return GlobalResponse.looginBermasalah("AUT00FV001",request);
         }
         User userNext = optUser.get();
         if(!userNext.getRegistered()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username / Password Salah - AUT00FV002");
+            return GlobalResponse.looginBermasalah("AUT00FV002",request);
         }
 
         if(!BcryptImpl.verifyHash((user.getUsername()+user.getPassword()),userNext.getPassword())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username / Password Salah - AUT00FV003");
+            return GlobalResponse.looginBermasalah("AUT00FV003",request);
         }
         Map<String,Object> m1 = new HashMap<>();
         m1.put("id", userNext.getId());
@@ -64,9 +74,11 @@ public class AppUserDetailService  implements UserDetailsService {
         if(JwtConfig.getTokenEncryptEnable().equals("y")){
             token = Crypto.performEncrypt(token);
         }
+        List<MenuLoginDTO> ltMenu = modelMapper.map(userNext.getAkses().getLtMenu(),new TypeToken<List<MenuLoginDTO>>(){}.getType());
         m.put("token",token);
-        m.put("menu",new ArrayList<>());
-        return ResponseEntity.ok().body(m);
+        m.put("menu",new TransformationData().doTransformAksesMenuLogin(ltMenu));
+        m.put("urlImage",userNext.getLinkImage());
+        return GlobalResponse.dataDitemukan(m,request);
     }
 
     /** Kuota 011-020 */
@@ -80,20 +92,23 @@ public class AppUserDetailService  implements UserDetailsService {
         if(!optUser.isPresent()){
             user.setPassword(BcryptImpl.hash(user.getUsername()+user.getPassword()));
             user.setOtp(BcryptImpl.hash(String.valueOf(intOtp)));
+            Akses akses = new Akses();
+            akses.setId(2L);//default untuk relasi nya ke akses, jadi user yang melakukan registrasi otomatis mendapatkan akses sebagai member
+            user.setAkses(akses);
             userRepo.save(user);
             m.put("email",user.getEmail());
         }else{
             User userNext = optUser.get();
             if(userNext.getRegistered()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User Telah Terdaftar, Silahkan Langsung Melakukan Login !! - AUT00FV011");
+                return GlobalResponse.sudahTeregistrasi("AUT00FV011",request);
             }
             Optional<User> optCheckEmailUser = userRepo.findByEmailAndIsRegistered(user.getEmail(),true);
             if(optCheckEmailUser.isPresent()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Telah Digunakan - AUT00FV012");
+                return GlobalResponse.emailTeregistrasi("AUT00FV012",request);
             }
             Optional<User> optCheckNoHp = userRepo.findByNoHpAndIsRegistered(user.getNoHp(),true);
             if(optCheckNoHp.isPresent()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No HP Telah Digunakan - AUT00FV013");
+                return GlobalResponse.noHpTeregistrasi("AUT00FV013",request);
             }
             userNext.setOtp(BcryptImpl.hash(String.valueOf(intOtp)));
             userNext.setEmail(user.getEmail());
@@ -116,25 +131,25 @@ public class AppUserDetailService  implements UserDetailsService {
                     String.valueOf(intOtp)
             );
         }
-
-        return ResponseEntity.ok().body(m);
+        return GlobalResponse.dataDitemukan(m,request);
     }
 
+    //021-030
     public ResponseEntity<Object> verifyRegis(User user , HttpServletRequest request){
         Optional<User> optUser = userRepo.findByEmail(user.getEmail());
         if(!optUser.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data Tidak Valid !!");
+            return GlobalResponse.dataTidakValid("AUT00FV021",request);
         }
         User userNext = optUser.get();
         /** OTP nya sudah Valid */
         if(!BcryptImpl.verifyHash(user.getOtp(),userNext.getOtp())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OTP Tidak Valid, Cek Email Anda !!");
+            return GlobalResponse.dataTidakValid("AUT00FV022",request);
         }
 
         userNext.setRegistered(true);
         userNext.setModifiedBy(userNext.getId());
 
-        return ResponseEntity.status(HttpStatus.OK).body("Registrasi Berhasil");
+        return GlobalResponse.registrasiBerhasil(request);
     }
 
     @Override

@@ -205,7 +205,8 @@ public class GroupMenuControllerTest extends AbstractTestNGSpringContextTests {
                 header("accept","*/*").
                 header(AuthControllerTest.AUTH_HEADER,token).
                 /** parameter ke tiga harus spesifik, type content nya apa, kalau tidak nanti dijadikan default application/octet-stream padahal sudah divalidasi dengan content excel*/
-                multiPart("file",new File(System.getProperty("user.dir")+"/src/test/resources/data-test/group-menu.xlsx"),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").
+                multiPart("file",new File(System.getProperty("user.dir")+"/src/test/resources/data-test/group-menu.xlsx"),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet").
                 request(Method.POST, pathVariable);
 
         int responseCode = response.statusCode();

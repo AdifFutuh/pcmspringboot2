@@ -23,6 +23,12 @@ public class GlobalResponse {
                 null,null,request);
     }
 
+    public static ResponseEntity<Object> registrasiBerhasil(HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Registrasi Berhasil !!",
+                HttpStatus.OK,
+                null,null,request);
+    }
+
     public static ResponseEntity<Object> dataTidakValid(String errorCode,HttpServletRequest request){
         return new ResponseHandler().handleResponse("Data Tidak Valid",
                 HttpStatus.BAD_REQUEST,
@@ -93,6 +99,27 @@ public class GlobalResponse {
         return new ResponseHandler().handleResponse("Upload File Excel Berhasil",
                 HttpStatus.CREATED,
                 null,null,request);
+    }
+    public static ResponseEntity<Object> looginBermasalah(String errorCode,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Username / Password Salah",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
+    }
+    public static ResponseEntity<Object> sudahTeregistrasi(String errorCode,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("User Telah Terdaftar, Silahkan Langsung Melakukan Login !!",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
+    }
+
+    public static ResponseEntity<Object> emailTeregistrasi(String errorCode,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("Email Telah Digunakan !!",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
+    }
+    public static ResponseEntity<Object> noHpTeregistrasi(String errorCode,HttpServletRequest request){
+        return new ResponseHandler().handleResponse("No HP Telah Digunakan !!",
+                HttpStatus.BAD_REQUEST,
+                null,errorCode,request);
     }
 
     public static void manualResponse(HttpServletResponse response, ResponseEntity<Object> resObject){
