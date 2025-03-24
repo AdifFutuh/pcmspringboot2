@@ -17,6 +17,7 @@ import com.juaracoding.security.JwtUtility;
 import com.juaracoding.util.GlobalFunction;
 import com.juaracoding.util.SendMailOTP;
 import com.juaracoding.util.TransformationData;
+import com.juaracoding.util.TransformationDataManual;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -76,7 +77,9 @@ public class AppUserDetailService  implements UserDetailsService {
         }
         List<MenuLoginDTO> ltMenu = modelMapper.map(userNext.getAkses().getLtMenu(),new TypeToken<List<MenuLoginDTO>>(){}.getType());
         m.put("token",token);
-        m.put("menu",new TransformationData().doTransformAksesMenuLogin(ltMenu));
+//        m.put("menu",new TransformationData().doTransformAksesMenuLogin(ltMenu));
+        m.put("menu",new TransformationDataManual().doTransformAksesMenuLogin(ltMenu));
+//        m.put("menu",ltMenu);
         m.put("urlImage",userNext.getLinkImage());
         return GlobalResponse.dataDitemukan(m,request);
     }

@@ -2,27 +2,19 @@ package com.juaracoding.util;
 
 import com.juaracoding.dto.response.MenuLoginDTO;
 import com.juaracoding.dto.response.MenuMappingDTO;
+import com.juaracoding.model.Menu;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeToken;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class TransformationData {
+public class TransformationDataManual {
     private int intListMenuSize = 0;
     private final List<Object> lObj = new ArrayList<>();
-    private ModelMapper modelMapper;
-    PropertyMap<MenuLoginDTO, MenuMappingDTO> propMapMenuToLogin;
-    public TransformationData() {
-        this.modelMapper = new ModelMapper();
-        propMapMenuToLogin = new PropertyMap<MenuLoginDTO,MenuMappingDTO>() {
-            protected void configure() {
-                map().setNamaGroupMenu(source.getGroupMenu().getNamaGroupMenu());
-            }
-        };
-        modelMapper.addMappings(propMapMenuToLogin);
-    }
+    private ModelMapper modelMapper = new ModelMapper();
 
     public List<Object> doTransformAksesMenuLogin(List<MenuLoginDTO> listMenu){
         lObj.clear();
@@ -30,10 +22,7 @@ public class TransformationData {
         /**
          * Grouping berdasarkan field getNamaGroupMenu
          */
-        List<MenuMappingDTO> z = modelMapper.map(listMenu, new TypeToken<List<MenuMappingDTO>>() {}.getType());
-//        List<Menu> l = new ArrayList<>();
-//        List<RespMenuDTO> ltMenu =  modelMapper.map(l, new TypeToken<List<RespMenuDTO>>() {}.getType());
-
+        List<MenuMappingDTO> z = convertToMenuMappingDTO(listMenu);
         Map<String, List<MenuMappingDTO>> map = groupBy(z, MenuMappingDTO::getNamaGroupMenu);
         Map<String ,Object> map2 = null;
         for (Map.Entry<String,List<MenuMappingDTO>> x:
@@ -51,5 +40,17 @@ public class TransformationData {
                 .orElseGet(ArrayList::new)
                 .stream().skip(0)
                 .collect(Collectors.groupingBy(keyFunction,Collectors.toList()));
+    }
+
+    private List<MenuMappingDTO> convertToMenuMappingDTO(List<MenuLoginDTO> list){
+        List<MenuMappingDTO> lt = new ArrayList<>();
+        for (MenuLoginDTO m : list) {
+            MenuMappingDTO dto = new MenuMappingDTO();
+            dto.setNama(m.getNama());
+            dto.setPath(m.getPath());
+            dto.setNamaGroupMenu(m.getGroupMenu().getNamaGroupMenu());
+            lt.add(dto);
+        }
+        return lt;
     }
 }
