@@ -101,6 +101,7 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
             if (!optionalGroupMenu.isPresent()) {
                 return GlobalResponse.dataTidakDitemukan("USM01FV021",request);
             }
+            groupMenuRepo.deleteById(id);
         }catch (Exception e) {
             LoggingFile.logException("GroupMenuService","delete(Long id) -- Line 95 "+RequestCapture.allRequest(request),e,OtherConfig.getEnableLog());
             return GlobalResponse.dataGagalDihapus("USM01FE021",request);
