@@ -35,6 +35,12 @@ public class GroupMenuController {
         return groupMenuService.findAll(pageable,request);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Object> findAllNoRoles(HttpServletRequest request){
+        Pageable pageable = PageRequest.of(0, OtherConfig.getPageDefault(), Sort.by("id"));
+        return groupMenuService.findAll(pageable,request);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('Group-Menu')")
     public ResponseEntity<Object> save(@Valid @RequestBody ValGroupMenuDTO valGroupMenuDTO, HttpServletRequest request){
@@ -66,6 +72,24 @@ public class GroupMenuController {
     @GetMapping("/{sort}/{sortBy}/{page}")
     @PreAuthorize("hasAuthority('Group-Menu')")
     public ResponseEntity<Object> findByParam(
+            @PathVariable(value = "sort") String sort,
+            @PathVariable(value = "sortBy") String sortBy,
+            @PathVariable(value = "page") Integer page,
+            @RequestParam(value = "size") Integer size,
+            @RequestParam(value = "column") String column,
+            @RequestParam(value = "value") String value,
+            HttpServletRequest request){
+        Pageable pageable = null;
+        sortBy = sortColumnByMap(sortBy);
+        switch (sort) {
+            case "asc":pageable = PageRequest.of(page, size, Sort.by(sortBy));break;
+            default: pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        }
+        return groupMenuService.findByParam(pageable,column,value,request);
+    }
+
+    @GetMapping("/all/{sort}/{sortBy}/{page}")
+    public ResponseEntity<Object> findByParamNoRoles(
             @PathVariable(value = "sort") String sort,
             @PathVariable(value = "sortBy") String sortBy,
             @PathVariable(value = "page") Integer page,

@@ -117,7 +117,6 @@ public class MenuService implements IService<Menu>, IReport<Menu> {
         page = menuRepo.findAll(pageable);
         list = page.getContent();
         List<RepMenuDTO> lt = converToRepMenuDTO(list);
-
         return GlobalResponse.dataDitemukan(transformPagination.transformPagination(lt,page,null,null),
                 request);
     }

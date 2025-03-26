@@ -26,8 +26,6 @@ public class AksesController {
     @Autowired
     private AksesService aksesService;
 
-    private Map<String,String> mapFilter = new HashMap<>();
-
     @GetMapping
     @PreAuthorize("hasAuthority('Akses')")
     public ResponseEntity<Object> findAll(HttpServletRequest request){

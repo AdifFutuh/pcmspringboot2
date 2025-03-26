@@ -191,8 +191,8 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
     public void downloadReportExcel(String column, String value, HttpServletRequest request, HttpServletResponse response) {
         List<GroupMenu> groupMenuList = null;
         switch (column){
-            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);
-            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);
+            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);break;
+            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);break;
             default : groupMenuList = groupMenuRepo.findAll();
         }
 
@@ -245,8 +245,8 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
         Map<String,Object> mapToken = GlobalFunction.extractToken(request);
         List<GroupMenu> groupMenuList = null;
         switch (column){
-            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);
-            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);
+            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);break;
+            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);break;
             default : groupMenuList = groupMenuRepo.findAll();
         }
 
@@ -290,8 +290,8 @@ public class GroupMenuService implements IService<GroupMenu>, IReport<GroupMenu>
         Map<String,Object> mapToken = GlobalFunction.extractToken(request);
         List<GroupMenu> groupMenuList = null;
         switch (column){
-            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);
-            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);
+            case "nama" : groupMenuList = groupMenuRepo.findByNamaContainsIgnoreCase(value);break;
+            case "deskripsi" : groupMenuList = groupMenuRepo.findByDeskripsiContainsIgnoreCase(value);break;
             default : groupMenuList = groupMenuRepo.findAll();
         }
 

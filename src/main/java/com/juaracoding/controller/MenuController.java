@@ -15,9 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 @RestController
 @RequestMapping("menu")
@@ -25,8 +22,6 @@ public class MenuController {
 
     @Autowired
     private MenuService menuService;
-
-    private Map<String,String> mapFilter = new HashMap<>();
 
     @GetMapping
     @PreAuthorize("hasAuthority('Menu')")

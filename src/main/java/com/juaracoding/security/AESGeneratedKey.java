@@ -48,7 +48,9 @@ public class AESGeneratedKey {
         return bytesToHex(aesKey.getEncoded());
     }
 
-    // Helper method untuk mengubah byte array menjadi string heksadesimal
+    /**
+     * Helper method untuk mengubah byte array menjadi string heksadesimal
+     */
     public static String bytesToHex(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         for (byte b : bytes) {
