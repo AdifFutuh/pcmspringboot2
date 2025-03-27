@@ -30,6 +30,12 @@ public class MenuController {
         return menuService.findAll(pageable,request);
     }
 
+    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('Menu')")
+    public ResponseEntity<Object> allMenu(HttpServletRequest request){
+        return menuService.allMenu(request);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('Menu')")
     public ResponseEntity<Object> save(@Valid @RequestBody ValMenuDTO valMenuDTO, HttpServletRequest request){

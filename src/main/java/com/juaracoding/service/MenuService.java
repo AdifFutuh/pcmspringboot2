@@ -136,6 +136,14 @@ public class MenuService implements IService<Menu>, IReport<Menu> {
         return GlobalResponse.dataDitemukan(modelMapper.map(optionalMenu.get(),RespMenuDTO.class),request);
     }
 
+    public ResponseEntity<Object> allMenu(HttpServletRequest request){
+        List<Menu> list = null;
+        list = menuRepo.findAll();
+        List<RepMenuDTO> lt = converToRepMenuDTO(list);
+        return GlobalResponse.dataDitemukan(lt,
+                request);
+    }
+
     @Override
     public ResponseEntity<Object> findByParam(Pageable pageable, String columnName, String value, HttpServletRequest request) {
 
